@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using Spectre.Console.Rendering;
 
 string[] menuChoices = new string[4] { "View Books", "Add Book", "Delete Book", "Exit" };
 List<string> books = new List<string>() { "The Great Gatsby", "To Kill a Mockingbird", "1984", "Pride and Prejudice", 
@@ -42,13 +43,16 @@ void viewBooks(List<string> books)
     Console.Clear();
     foreach(string elem in books)
     {
-        Console.WriteLine(elem);
+        AnsiConsole.MarkupLine($"[italic]{elem}[/]");
     }
-    Console.WriteLine("");
+    AnsiConsole.MarkupLine("");
+    AnsiConsole.MarkupLine("Press any key to continue;");
+    Console.ReadKey();
 }
 
 void addBook(ref List<string> books, string bookName)
 {
+
     books.Add(bookName);
 }
 
@@ -58,8 +62,11 @@ void deleteBook(ref List<string> books, string bookName)
         books.Remove(bookName);
 }
 
+/* 
+ -> add message to ask which book to add or delete in the corresponding functions
+ -> check if book already exists before adding
+ -> check if book exists before deleting
+ -> use the new library for this purpose
+ -> can you clear console with new library ?
+ * */
 
-
-/*
- Next implement the View book, add book and delete book function so we can make this program work
- */
