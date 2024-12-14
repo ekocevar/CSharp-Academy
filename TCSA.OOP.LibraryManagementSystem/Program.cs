@@ -9,64 +9,73 @@ List<string> books = new List<string>() { "The Great Gatsby", "To Kill a Mocking
 
 while (true)
 {
-    string choice = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>().Title("What do you want to do next?")
-                    .AddChoices(menuChoices));
+    string choice = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("What do you want to do next?").AddChoices(menuChoices));
+    
     if (choice.Equals(menuChoices[0]))
     {
-        Console.Clear();
+        AnsiConsole.Clear();
         if (books.Count > 0)
             viewBooks(books);
     }
     else if (choice.Equals(menuChoices[1]))
     {
-        string? bookName = Console.ReadLine();
-        if (books.Count > 0 && bookName != null)
-            addBook(ref books, bookName);
+        if (books.Count > 0)
+            addBook(ref books);
     }
     else if (choice.Equals(menuChoices[2]))
     {
-        string? bookName = Console.ReadLine();
-
-        if (books.Count > 0 && bookName != null)
-            deleteBook(ref books, bookName);
+        if (books.Count > 0)
+            deleteBook(ref books);
     }
     else
     {
-        Console.Clear();
+        AnsiConsole.Clear();
         break;
     }
 }
 
 void viewBooks(List<string> books)
 {
-    Console.Clear();
+    AnsiConsole.Clear();
     foreach(string elem in books)
     {
         AnsiConsole.MarkupLine($"[italic]{elem}[/]");
     }
-    AnsiConsole.MarkupLine("");
-    AnsiConsole.MarkupLine("Press any key to continue;");
-    Console.ReadKey();
+    AnsiConsole.WriteLine("");
+    AnsiConsole.WriteLine("Press any key to continue;");
+    AnsiConsole.Console.Input.ReadKey(true);
 }
 
-void addBook(ref List<string> books, string bookName)
+void addBook(ref List<string> books)
 {
+    string? bookName = AnsiConsole.Ask<string>("Please enter the name of the book that you would like to add to the list: ");
 
-    books.Add(bookName);
+    if (!books.Contains(bookName))
+    {
+        books.Add(bookName);
+        AnsiConsole.MarkupLine($"\n[italic]{bookName}[/] has been added to the book list.\n");
+    }
+    else
+        AnsiConsole.MarkupLine($"\n[italic]{bookName}[/] is already in the list.\n");
 }
 
-void deleteBook(ref List<string> books, string bookName)
+void deleteBook(ref List<string> books)
 {
+    string? bookName = AnsiConsole.Ask<string>("Please enter the name of the book that you would like to delete: ");
+
     if (books.Contains(bookName))
+    {
         books.Remove(bookName);
+        AnsiConsole.MarkupLine($"\n[italic]{bookName}[/] has been deleted from the list.\n");
+    }
+    else
+        AnsiConsole.MarkupLine($"\n[italic]{bookName}[/] is not in the list.\n");
 }
 
 /* 
- -> add message to ask which book to add or delete in the corresponding functions
- -> check if book already exists before adding
- -> check if book exists before deleting
- -> use the new library for this purpose
- -> can you clear console with new library ?
- * */
+ ->
+ ->
+ ->
+ ->
+ */
 
